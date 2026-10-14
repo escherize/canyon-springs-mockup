@@ -1,0 +1,135 @@
+/* Canyon Springs mockup: "Big Idaho sky".
+   Cobalt carries the brand, white is the ground, wheat is a rare accent. */
+
+:root {
+  --night: oklch(0.25 0.08 258);   /* footer, deepest blue */
+  --cobalt: oklch(0.43 0.17 256);  /* primary: buttons, links, the Sunday panel */
+  --cobalt-hover: oklch(0.37 0.16 257);
+  --sky: oklch(0.74 0.14 247);     /* seed blue; on dark only */
+  --sky-wash: oklch(0.95 0.025 240);
+  --wheat: oklch(0.83 0.13 82);    /* accent on blue */
+  --ink: oklch(0.21 0.02 256);
+  --ink-2: oklch(0.43 0.025 256);  /* secondary text, 7:1 on white */
+  --line: oklch(0.89 0.012 250);
+  --bg: oklch(1 0 0);
+
+  --font: "Mona Sans", system-ui, sans-serif;
+  --step--1: clamp(0.94rem, 0.9rem + 0.1vw, 1rem);
+  --step-0: clamp(1.06rem, 1rem + 0.25vw, 1.19rem);
+  --step-1: clamp(1.33rem, 1.2rem + 0.5vw, 1.6rem);
+  --step-2: clamp(1.7rem, 1.45rem + 1.1vw, 2.4rem);
+  --step-3: clamp(2.2rem, 1.7rem + 2.3vw, 3.7rem);
+  --step-4: clamp(2.7rem, 1.8rem + 4.2vw, 5.6rem);
+
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --max: 76rem;
+  --radius: 6px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1); /* ease-out-expo */
+
+  --z-sticky: 10;
+  --z-menu: 20;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  font-stretch: 100%;
+}
+[hidden] { display: none !important; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: var(--cobalt); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { color: var(--cobalt-hover); text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; border-radius: 2px; }
+.on-blue :focus-visible, .on-blue:focus-visible { outline-color: var(--wheat); }
+
+h1, h2, h3 {
+  font-stretch: 125%;
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  margin: 0;
+}
+h1 { font-size: var(--step-4); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-1); line-height: 1.15; letter-spacing: -0.01em; }
+p { margin: 0 0 1em; text-wrap: pretty; }
+.lead { font-size: var(--step-1); line-height: 1.45; color: var(--ink-2); max-width: 38ch; }
+.prose { max-width: 66ch; }
+.prose h2 { font-size: var(--step-2); margin: 2.2em 0 0.6em; }
+.prose h3 { margin: 1.8em 0 0.4em; }
+.prose ul { padding-left: 1.2em; }
+.prose li { margin-bottom: 0.4em; }
+
+.wrap { width: min(100% - 2 * var(--gutter), var(--max)); margin-inline: auto; }
+.section { padding-block: clamp(3.5rem, 2rem + 6vw, 7.5rem); }
+.section-tight { padding-block: clamp(2.5rem, 1.5rem + 3vw, 4.5rem); }
+.stack > * + * { margin-top: var(--space, 1rem); }
+.muted { color: var(--ink-2); }
+.small { font-size: var(--step--1); }
+
+/* Buttons: 48px tall, real tap targets */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
+  min-height: 3rem; padding: 0.7em 1.3em;
+  border-radius: 999px; border: 2px solid var(--cobalt);
+  background: var(--cobalt); color: white;
+  font: 650 var(--step--1)/1.1 var(--font); font-stretch: 112%;
+  text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.btn:hover { background: var(--cobalt-hover); border-color: var(--cobalt-hover); color: white; }
+.btn:active { transform: translateY(1px); }
+.btn.ghost { background: transparent; color: var(--cobalt); }
+.btn.ghost:hover { background: var(--sky-wash); color: var(--cobalt-hover); }
+.on-blue .btn { background: white; border-color: white; color: var(--cobalt); }
+.on-blue .btn:hover { background: var(--wheat); border-color: var(--wheat); color: var(--night); }
+.on-blue .btn.ghost { background: transparent; color: white; border-color: oklch(1 0 0 / 0.55); }
+.on-blue .btn.ghost:hover { border-color: white; background: oklch(1 0 0 / 0.1); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+.on-blue { background: var(--cobalt); color: white; }
+.on-blue a:not(.btn) { color: white; }
+.on-blue .muted { color: oklch(0.93 0.03 245); }
+
+/* Arrow link */
+.go { font-weight: 650; text-decoration: none; display: inline-flex; gap: 0.4em; align-items: center; min-height: 2.75rem; }
+.go::after { content: "→"; transition: transform 0.25s var(--ease); }
+.go:hover::after { transform: translateX(4px); }
+
+/* Photo credit */
+.credit { font-size: 0.8rem; color: var(--ink-2); margin-top: 0.5rem; }
+
+/* Page header for inner pages */
+.page-head { padding-block: clamp(2.5rem, 1.5rem + 5vw, 5.5rem) clamp(1.5rem, 1rem + 2vw, 3rem); }
+.page-head h1 { font-size: var(--step-4); max-width: 14ch; }
+.page-head .lead { margin-top: 1.25rem; }
+.band-photo { width: 100%; aspect-ratio: 16 / 6; object-fit: cover; }
+@media (max-width: 40rem) { .band-photo { aspect-ratio: 4 / 3; } }
+
+/* Fact list: label / value rows */
+.facts { display: grid; gap: 0; margin: 0; border-top: 1px solid var(--line); }
+.facts > div { display: grid; grid-template-columns: minmax(7rem, 11rem) 1fr; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+.facts dt { font-weight: 700; font-stretch: 112%; }
+.facts dd { margin: 0; }
+@media (max-width: 30rem) { .facts > div { grid-template-columns: 1fr; gap: 0.15rem; } }
+
+/* Two-column split */
+.split { display: grid; gap: clamp(2rem, 1rem + 4vw, 5rem); grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 56rem) { .split { grid-template-columns: 5fr 7fr; } .split.even { grid-template-columns: 1fr 1fr; } }
+
+/* Load-in motion: content is visible by default; motion only adds. */
+@media (prefers-reduced-motion: no-preference) {
+  .rise { animation: rise 0.9s var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}

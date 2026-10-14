@@ -1,0 +1,60 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHead from "../components/PageHead.astro";
+import events from "../data/events.json";
+const base = import.meta.env.BASE_URL;
+const mine = events.upcoming.filter((e) => e.href === "students/");
+const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+---
+<Layout title="Canyon Students" description="Canyon Students: 6th–12th grade. Wednesdays 6:30–8:30 PM and Sundays at 10:30 AM.">
+  <PageHead title="Canyon Students" lead="A place for middle and high school students to know Jesus more and follow Him better." photo="serve-night.jpg" alt="A big group of students and adults at the community garden behind a Canyon Springs Garden Outreach banner." pos="50% 45%" />
+
+  <section class="wrap section split">
+    <div>
+      <h2>When we meet</h2>
+      <p class="muted">Student Minister: Connor Hill<br /><a href="mailto:connor@canyonchristian.com">connor@canyonchristian.com</a></p>
+    </div>
+    <div class="meet">
+      <article>
+        <h3>Wednesday nights</h3>
+        <p class="when">6:30–8:30 PM · 6th–12th grade</p>
+        <p>An awesome time to find community and grow in relationship with others and with God. Games, dinner, a main lesson, and small groups where students break off by age to talk about what they learned and do life together.</p>
+      </article>
+      <article>
+        <h3>Sunday mornings</h3>
+        <p class="when">10:30 AM, during second service · middle school</p>
+        <p>A class designed to help middle schoolers engage with Scripture together.</p>
+      </article>
+      <article>
+        <h3>Sunday evenings</h3>
+        <p class="when">1st and 3rd Sundays · 9th–12th grade</p>
+        <p>High school small groups study the Bible, build friendships, and deepen their faith. Questions about scheduling? Email Connor.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap section-tight split upnext">
+    <div><h2 class="h-sm">Coming up</h2></div>
+    <div>
+      <ul class="list">
+        {mine.map((e) => <li><span class="muted small">{fmt(e.date)} · {e.time}</span><strong>{e.title}</strong></li>)}
+        <li><span class="muted small">Wed, Nov 25 and Dec 23–30</span><strong>No youth group (Thanksgiving and Christmas breaks)</strong></li>
+        <li><span class="muted small">June 19–25, 2027</span><strong>Mexico mission trip</strong><a href="https://canyon-springs-christian-church-451724.churchcenter.com/registrations/signups/3797101" rel="noopener">Apply on Church Center</a></li>
+      </ul>
+      <div class="btn-row"><a class="btn ghost" href="https://docs.google.com/forms/d/e/1FAIpQLSc24i1iwrMf8WwdfDm7NkwI8fV9fctZBrTjJmGYNrF8ztS55g/viewform" rel="noopener">Volunteer with students</a></div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .h-sm { font-size: var(--step-2); }
+  .meet { display: grid; gap: 0; border-top: 2px solid var(--ink); }
+  .meet article { padding: 1.25rem 0; border-bottom: 1px solid var(--line); }
+  .meet h3 { font-size: var(--step-2); }
+  .when { color: var(--cobalt); font-weight: 650; margin: 0.35rem 0 0.6rem; }
+  .meet p:last-child { color: var(--ink-2); max-width: 60ch; margin: 0; }
+  .list { list-style: none; padding: 0; margin: 0 0 1.5rem; border-top: 2px solid var(--ink); }
+  .list li { display: grid; gap: 0.15rem; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
+  .list strong { font-stretch: 112%; font-size: var(--step-1); line-height: 1.25; }
+  .list a { min-height: 2.75rem; display: inline-flex; align-items: center; }
+</style>

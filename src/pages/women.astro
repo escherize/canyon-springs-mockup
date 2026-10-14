@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHead from "../components/PageHead.astro";
+const base = import.meta.env.BASE_URL;
+---
+<Layout title="Women's Ministry" description="Bible studies, retreats and a Friday morning group for women at Canyon Springs.">
+  <PageHead title="Women's Ministry" lead="Through Bible studies, conferences, retreats, and special events, the women at Canyon Springs are intentional about their fellowship with one another and growing in Christ together." />
+  <section class="wrap section-tight split">
+    <div><h2>Join us</h2></div>
+    <div class="stack">
+      <dl class="facts">
+        <div><dt>Women's Life Group</dt><dd>Fridays, 10 AM–noon, at the church</dd></div>
+        <div><dt>Questions</dt><dd><a href="mailto:women@canyonchristian.com">women@canyonchristian.com</a></dd></div>
+      </dl>
+      <p class="muted small">Retreats and studies show up on the <a href={`${base}events/`}>events page</a> as soon as they're on the church calendar.</p>
+    </div>
+  </section>
+</Layout>

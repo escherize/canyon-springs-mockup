@@ -1,0 +1,212 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Sermon from "../components/Sermon.astro";
+import { church } from "../data/site";
+import events from "../data/events.json";
+import messages from "../data/messages.json";
+const base = import.meta.env.BASE_URL;
+const latest = messages[0];
+const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+---
+<Layout>
+  <section class="hero">
+    <div class="wrap hero-text">
+      <h1>
+        <span class="rise" style="--i:0">A place to belong.</span>
+        <span class="rise sub" style="--i:1">A place to grow. A place to serve.</span>
+      </h1>
+      <p class="lead rise" style="--i:3">A community of Christians in Middleton, Idaho, who gather to encourage one another, grow in our faith, and invite others to know and follow Jesus.</p>
+    </div>
+
+    <div class="hero-stage">
+      <figure class="hero-photo">
+        <img src={`${base}photos/wheat-pivot-2400.jpg`} srcset={`${base}photos/wheat-pivot-1200.jpg 1200w, ${base}photos/wheat-pivot-2400.jpg 2400w`} sizes="100vw" width="2400" height="1600" alt="Ripe wheat in the foreground, an irrigation pivot watering a green field behind it, under a clear Idaho sky." fetchpriority="high" />
+      </figure>
+      <div class="wrap sunday-wrap">
+        <section class="sunday on-blue rise" style="--i:4" aria-labelledby="sunday-h">
+          <h2 id="sunday-h">This Sunday</h2>
+          <p class="times">
+            {church.services.map((t) => <span>{t}<small>AM</small></span>)}
+          </p>
+          <p class="sunday-detail">Kids (newborn–5th grade) have their own programs at both services.</p>
+          <p class="sunday-detail"><a href={church.mapUrl} rel="noopener">{church.street}, Middleton</a></p>
+          <div class="btn-row">
+            <a class="btn" href={`${base}visit/`}>Plan your visit</a>
+            <a class="btn ghost" href={church.mapUrl} rel="noopener">Directions</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pillars wrap" aria-label="Who we are">
+    <div>
+      <h2>Belong</h2>
+      <p>Life Groups meet every week outside of Sunday services to study God's Word and encourage each other.</p>
+      <a class="go" href={`${base}groups/`}>Find a group</a>
+    </div>
+    <div>
+      <h2>Grow</h2>
+      <p>A new message every Sunday, with notes to fill in as you listen. This fall: the parables of Jesus in Matthew.</p>
+      <a class="go" href={`${base}watch/`}>Watch a message</a>
+    </div>
+    <div>
+      <h2>Serve</h2>
+      <p>Garden Outreach grows and gleans food for local food banks and neighbors in need. It's run entirely by volunteers.</p>
+      <a class="go" href={`${base}garden/`}>See Garden Outreach</a>
+    </div>
+  </section>
+
+  <div class="strip" aria-hidden="false">
+    <img src={`${base}photos/lobby.jpg`} width="1600" height="1066" alt="People catching up in the church lobby after a Sunday service." loading="lazy" />
+    <img src={`${base}photos/kids-class.jpg`} width="1600" height="1200" alt="Kids smiling at a craft table in a Canyon Kids classroom." loading="lazy" />
+    <img src={`${base}photos/garden-volunteers.jpg`} width="866" height="650" alt="Garden Outreach volunteers, adults and kids, at the community garden." loading="lazy" />
+  </div>
+
+  <section class="section-tight latest-band" aria-labelledby="latest-h">
+    <div class="wrap">
+      <h2 id="latest-h" class="band-h">Last Sunday</h2>
+      <Sermon message={latest} />
+    </div>
+  </section>
+
+  <section class="section wrap week" aria-labelledby="week-h">
+    <div class="week-head">
+      <h2 id="week-h">Coming up</h2>
+      <p class="muted">Straight from the church calendar, so it's never out of date.</p>
+    </div>
+    <div class="week-cols">
+      <div>
+        <h3>Every week</h3>
+        <ul class="timetable">
+          <li><span class="tt-when">Sundays, 9:00 & 10:30 AM</span><span class="tt-what">Worship, plus kids' programs</span></li>
+          {events.weekly.map((e) => (
+            <li><span class="tt-when">{e.when}</span><a class="tt-what" href={base + e.href}>{e.title}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h3>Special events</h3>
+        <ul class="timetable">
+          {events.upcoming.map((e) => (
+            <li><span class="tt-when">{fmt(e.date)} · {e.time}</span><a class="tt-what" href={base + e.href}>{e.title}</a><span class="tt-where muted small">{e.where}</span></li>
+          ))}
+        </ul>
+        <a class="go" href={`${base}events/`}>All events</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ministries" aria-labelledby="min-h">
+    <div class="wrap">
+      <h2 id="min-h">For every age</h2>
+    </div>
+    <div class="wrap min-list">
+      <a class="min" href={`${base}kids/`}>
+        <span class="min-name">Kids</span>
+        <span class="min-detail">Newborn–5th grade · Sundays at 9:00 and 10:30</span>
+      </a>
+      <a class="min" href={`${base}students/`}>
+        <span class="min-name">Students</span>
+        <span class="min-detail">6th–12th grade · Sundays 10:30, Wednesdays 6:30 PM</span>
+      </a>
+      <a class="min" href={`${base}groups/`}>
+        <span class="min-name">Life Groups</span>
+        <span class="min-detail">Small groups that meet weekly</span>
+      </a>
+      <a class="min" href={`${base}women/`}>
+        <span class="min-name">Women</span>
+        <span class="min-detail">Bible studies, retreats and a Friday morning group</span>
+      </a>
+      <a class="min" href={`${base}groups/#men`}>
+        <span class="min-name">Men</span>
+        <span class="min-detail">Saturday morning group and a monthly breakfast</span>
+      </a>
+      <a class="min" href={`${base}garden/`}>
+        <span class="min-name">Garden Outreach</span>
+        <span class="min-detail">Gardening, teaching, and sharing the harvest</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="closer on-blue">
+    <img class="closer-img" src={`${base}photos/pivot-sky-1200.jpg`} srcset={`${base}photos/pivot-sky-1200.jpg 1200w, ${base}photos/pivot-sky-2400.jpg 2400w`} sizes="(min-width: 56rem) 50vw, 100vw" width="1200" height="800" alt="An irrigation pivot stretching across a green field toward the horizon." loading="lazy" />
+    <div class="closer-text">
+      <h2>First time? Here's what Sunday looks like.</h2>
+      <p class="muted">Service times, how kids check in, and what to expect. Come as you are.</p>
+      <div class="btn-row"><a class="btn" href={`${base}visit/`}>Plan your visit</a></div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero-text { padding-block: clamp(2.5rem, 1rem + 6vw, 6rem) clamp(2rem, 1rem + 3vw, 3.5rem); }
+  .hero h1 { display: grid; gap: 0.3em; font-size: var(--step-4); }
+  .hero h1 .sub { color: var(--cobalt); font-size: 0.5em; line-height: 1.1; letter-spacing: -0.01em; }
+  .hero .lead { margin-top: 1.5rem; }
+
+  .hero-stage { position: relative; }
+  .hero-photo { margin: 0; }
+  .hero-photo img { width: 100%; height: clamp(22rem, 62vh, 44rem); object-fit: cover; object-position: 50% 40%; }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-photo img { animation: settle 1.6s var(--ease) both; }
+    @keyframes settle { from { transform: scale(1.06); filter: saturate(0.7) brightness(1.08); } }
+    .hero-photo { overflow: hidden; }
+  }
+
+  .sunday-wrap { position: absolute; inset: auto 0 0 0; pointer-events: none; }
+  .sunday { pointer-events: auto; width: min(100%, 32rem); padding: clamp(1.5rem, 1rem + 2vw, 2.25rem); border-radius: var(--radius) var(--radius) 0 0; }
+  .sunday h2 { font-size: var(--step-1); color: var(--wheat); letter-spacing: 0; }
+  .times { display: flex; gap: 1.25rem; margin: 0.6rem 0 0.9rem; font-size: var(--step-3); font-weight: 850; font-stretch: 125%; line-height: 1; letter-spacing: -0.03em; }
+  .times small { font-size: 0.35em; margin-left: 0.2em; letter-spacing: 0; font-weight: 700; }
+  .sunday-detail { margin-bottom: 0.6rem; }
+  .sunday .btn-row { margin-top: 1.25rem; }
+
+  /* Phones: the Sunday panel comes before the photo, so when/where is on the first screen. */
+  @media (max-width: 44rem) {
+    .hero-stage { display: flex; flex-direction: column-reverse; }
+    .sunday-wrap { position: static; width: 100%; max-width: none; margin: 0; }
+    .sunday { width: 100%; border-radius: 0; padding: 1.75rem var(--gutter); }
+    .hero-photo img { height: 16rem; }
+    .hero-text { padding-block: 1.75rem 1.5rem; }
+    .hero .lead { margin-top: 1rem; font-size: var(--step-0); }
+  }
+
+  .pillars { display: grid; gap: clamp(2rem, 1rem + 3vw, 4rem); grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .pillars h2 { font-size: var(--step-3); color: var(--cobalt); margin-bottom: 0.9rem; }
+  .pillars p { color: var(--ink-2); max-width: 32ch; }
+
+  .strip { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 4px; }
+  .strip img { width: 100%; height: clamp(12rem, 28vw, 24rem); object-fit: cover; }
+  @media (max-width: 40rem) { .strip { grid-template-columns: 1fr 1fr; } .strip img:first-child { grid-column: 1 / -1; } .strip img { height: 11rem; } }
+
+  .latest-band { background: var(--sky-wash); }
+  .band-h { font-size: var(--step-2); margin-bottom: 1.5rem; }
+
+  .week-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 2rem; margin-bottom: 2rem; }
+  .week-head p { margin: 0; }
+  .week-cols { display: grid; gap: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); }
+  .week-cols h3 { margin-bottom: 0.75rem; }
+  .timetable { list-style: none; padding: 0; margin: 0 0 1rem; border-top: 2px solid var(--ink); }
+  .timetable li { display: grid; gap: 0.15rem 1.5rem; grid-template-columns: 1fr; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
+  .tt-when { font-size: var(--step--1); color: var(--ink-2); font-weight: 550; }
+  .tt-what { font-weight: 700; font-size: var(--step-1); font-stretch: 112%; line-height: 1.2; }
+  a.tt-what { text-decoration: none; }
+  a.tt-what:hover { text-decoration: underline; }
+
+  .ministries { padding-bottom: clamp(3.5rem, 2rem + 6vw, 7.5rem); }
+  .ministries h2 { margin-bottom: 1.5rem; }
+  .min-list { display: grid; border-top: 2px solid var(--ink); }
+  .min { display: grid; grid-template-columns: 1fr; gap: 0.2rem; align-items: baseline; padding: 1.2rem 0; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--ink); position: relative; }
+  @media (min-width: 48rem) { .min { grid-template-columns: minmax(16rem, 1fr) 1.4fr auto; } .min::after { content: "→"; color: var(--cobalt); font-size: var(--step-1); transition: transform 0.25s var(--ease); } }
+  .min-name { font-size: var(--step-2); font-weight: 800; font-stretch: 125%; letter-spacing: -0.02em; line-height: 1.1; transition: color 0.2s var(--ease); }
+  .min-detail { color: var(--ink-2); }
+  .min:hover .min-name { color: var(--cobalt); }
+  .min:hover::after { transform: translateX(6px); }
+
+  .closer { display: grid; grid-template-columns: 1fr; }
+  @media (min-width: 56rem) { .closer { grid-template-columns: 1fr 1fr; } }
+  .closer-img { width: 100%; height: 100%; min-height: 18rem; object-fit: cover; }
+  .closer-text { padding: clamp(2.5rem, 1.5rem + 5vw, 6rem) var(--gutter); align-self: center; max-width: 36rem; }
+  .closer h2 { font-size: var(--step-3); margin-bottom: 1rem; }
+</style>

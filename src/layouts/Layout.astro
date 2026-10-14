@@ -1,0 +1,157 @@
+---
+import "../styles/global.css";
+import { church, nav, footerNav, snapshot } from "../data/site";
+
+interface Props { title?: string; description?: string; }
+const { title, description = "Canyon Springs Christian Church in Middleton, Idaho. Sundays at 9:00 and 10:30 AM." } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const here = Astro.url.pathname;
+const pageTitle = title ? `${title} · ${church.short}` : `${church.name} · Middleton, Idaho`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@100..125,400..900&display=swap" />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="mockup-note">
+      <div class="wrap">
+        <strong>Design mockup, not the live site.</strong>{" "}
+        Sermons and events are a real snapshot of YouTube and Church Center from {snapshot}. The real site would update itself.
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="wrap bar">
+        <a class="brand" href={base} aria-label={`${church.name}, home`}>
+          <span class="brand-name">Canyon Springs</span>
+          <span class="brand-sub">Christian Church</span>
+        </a>
+        <nav aria-label="Main" class="nav-desktop">
+          <ul>
+            {nav.slice(1).map((l) => (
+              <li><a href={base + l.href} aria-current={here.startsWith(base + l.href) ? "page" : undefined}>{l.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+        <div class="bar-actions">
+          <a class="btn" href={`${base}visit/`}>Plan a visit</a>
+          <button class="menu-btn" popovertarget="menu" aria-label="Open menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <nav id="menu" popover aria-label="Menu" class="menu on-blue">
+        <div class="menu-top">
+          <span class="brand-name">Canyon Springs</span>
+          <button popovertarget="menu" popovertargetaction="hide" class="menu-btn" aria-label="Close menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <ul>
+          {nav.map((l) => <li><a href={base + l.href}>{l.label}</a></li>)}
+        </ul>
+        <p class="menu-meta">Sundays {church.services.join(" & ")} AM<br />{church.street}, Middleton</p>
+      </nav>
+    </header>
+
+    <main id="main"><slot /></main>
+
+    <footer class="site-footer on-blue">
+      <div class="wrap foot-grid">
+        <div>
+          <p class="foot-brand">Canyon Springs<br />Christian Church</p>
+          <p class="muted">A place to belong, to grow, and to serve.</p>
+        </div>
+        <div>
+          <h2 class="foot-h">Sundays</h2>
+          <p>{church.services.join(" & ")} AM<br />Kids programs at both</p>
+          <p><a href={church.mapUrl} rel="noopener">{church.street}<br />{church.city}</a></p>
+        </div>
+        <div>
+          <h2 class="foot-h">Reach us</h2>
+          <p><a href={church.phoneHref}>{church.phone}</a><br /><a href={`mailto:${church.email}`}>{church.email}</a></p>
+          <p class="socials">
+            <a href={church.facebook} rel="noopener">Facebook</a>
+            <a href={church.instagram} rel="noopener">Instagram</a>
+            <a href={church.youtube} rel="noopener">YouTube</a>
+          </p>
+        </div>
+        <div>
+          <h2 class="foot-h">More</h2>
+          <ul class="foot-links">
+            {footerNav.map((l) => <li><a href={base + l.href}>{l.label}</a></li>)}
+          </ul>
+        </div>
+      </div>
+      <div class="wrap foot-base small">
+        <p>© 2026 {church.name}</p>
+        <p>Photos: farmland near Middleton, USDA NRCS (public domain), and the church's own YouTube videos.</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .skip { position: absolute; left: -999px; top: 0; background: white; padding: 0.75rem 1rem; z-index: var(--z-menu); }
+  .skip:focus { left: 0.5rem; top: 0.5rem; }
+
+  .mockup-note { background: var(--sky-wash); color: var(--ink); font-size: var(--step--1); padding-block: 0.6rem; line-height: 1.45; }
+
+  .site-header { position: sticky; top: 0; z-index: var(--z-sticky); background: oklch(1 0 0 / 0.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: 4.5rem; }
+  .brand { display: grid; text-decoration: none; color: var(--ink); line-height: 1; }
+  .brand-name { font-weight: 850; font-stretch: 125%; font-size: 1.2rem; letter-spacing: -0.02em; }
+  .brand-sub { font-size: 0.78rem; font-weight: 550; font-stretch: 110%; color: var(--ink-2); margin-top: 0.2rem; }
+  .brand:hover { color: var(--cobalt); }
+
+  .nav-desktop ul { display: flex; gap: clamp(0.75rem, 1.6vw, 1.75rem); list-style: none; margin: 0; padding: 0; }
+  .nav-desktop a { color: var(--ink); text-decoration: none; font-weight: 550; font-size: var(--step--1); display: inline-flex; min-height: 2.75rem; align-items: center; border-bottom: 2px solid transparent; }
+  .nav-desktop a:hover { color: var(--cobalt); border-bottom-color: currentColor; }
+  .nav-desktop a[aria-current="page"] { color: var(--cobalt); border-bottom-color: var(--cobalt); }
+
+  .bar-actions { display: flex; align-items: center; gap: 0.5rem; }
+  .menu-btn { display: none; width: 3rem; height: 3rem; border: 0; background: transparent; color: inherit; border-radius: 999px; cursor: pointer; place-items: center; }
+  .menu-btn:hover { background: var(--sky-wash); }
+
+  @media (max-width: 62rem) {
+    .nav-desktop { display: none; }
+    .menu-btn { display: grid; }
+  }
+  @media (max-width: 24rem) { .bar-actions .btn { padding-inline: 0.9em; } }
+
+  .menu { position: fixed; inset: 0; width: 100%; height: 100dvh; max-width: none; max-height: none; margin: 0; border: 0; padding: 1rem var(--gutter) 2rem; overflow-y: auto; }
+  .menu:popover-open { display: flex; flex-direction: column; }
+  @media (prefers-reduced-motion: no-preference) {
+    .menu:popover-open { animation: menu-in 0.35s var(--ease); }
+    @keyframes menu-in { from { opacity: 0; transform: translateY(-12px); } }
+  }
+  .menu-top { display: flex; justify-content: space-between; align-items: center; min-height: 3.5rem; }
+  .menu .menu-btn { display: grid; color: white; }
+  .menu .menu-btn:hover { background: oklch(1 0 0 / 0.12); }
+  .menu ul { list-style: none; padding: 0; margin: 1.5rem 0; }
+  .menu li a { display: block; padding: 0.55rem 0; font-size: var(--step-2); font-weight: 800; font-stretch: 125%; text-decoration: none; letter-spacing: -0.02em; }
+  .menu li a:hover { color: var(--wheat); }
+  .menu-meta { margin-top: auto; color: oklch(0.93 0.03 245); }
+
+  .site-footer { background: var(--night); padding-block: clamp(3rem, 2rem + 4vw, 5rem) 2rem; }
+  .foot-grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
+  .foot-brand { font-weight: 850; font-stretch: 125%; font-size: var(--step-1); line-height: 1.05; letter-spacing: -0.02em; }
+  .foot-h { font-size: var(--step--1); font-stretch: 112%; font-weight: 700; color: var(--wheat); margin-bottom: 0.6rem; letter-spacing: 0; }
+  .site-footer a { text-decoration-color: oklch(1 0 0 / 0.4); }
+  .site-footer a:hover { color: var(--wheat); }
+  .socials { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
+  .socials a, .foot-links a { display: inline-flex; min-height: 2.75rem; align-items: center; }
+  .foot-links { list-style: none; margin: 0; padding: 0; }
+  .foot-base { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid oklch(1 0 0 / 0.15); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; color: oklch(0.88 0.03 245); }
+  .foot-base p { margin: 0; }
+</style>

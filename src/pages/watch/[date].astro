@@ -1,0 +1,86 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, render } from "astro:content";
+import { church } from "../../data/site";
+import messages from "../../data/messages.json";
+
+export async function getStaticPaths() {
+  const notes = await getCollection("notes");
+  return messages.map((m) => ({ params: { date: m.date }, props: { m, note: notes.find((n) => n.id.startsWith(m.date)) } }));
+}
+const { m, note } = Astro.props;
+const { Content } = note ? await render(note) : { Content: null };
+const base = import.meta.env.BASE_URL;
+const pretty = new Date(m.date + "T12:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+---
+<Layout title={m.title} description={`${m.series}: ${m.title} (${m.scripture}), ${pretty}.`}>
+  <article>
+    <header class="wrap msg-head">
+      <p class="muted"><a href={`${base}watch/`}>Watch</a> / {m.series}</p>
+      <h1>{m.title}</h1>
+      <p class="lead">{m.scripture} · {pretty}</p>
+    </header>
+
+    <div class="wrap">
+      <div class="video">
+        <iframe src={`https://www.youtube-nocookie.com/embed/${m.youtubeId}`} title={`Video: ${m.title}`} loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <section id="notes" class="wrap section notes-wrap">
+      {Content ? (
+        <div class="notes">
+          <div class="notes-head">
+            <h2>Sermon notes</h2>
+            <p class="muted small">Fill in the blanks as you listen. Your answers stay on this device.</p>
+          </div>
+          <div class="notes-body prose"><Content /></div>
+          <p class="small muted converted">This page was made automatically from the Word file the office already writes ({note.data.source}). No retyping.</p>
+        </div>
+      ) : (
+        <div class="notes empty">
+          <h2>Sermon notes</h2>
+          <p class="muted">Notes for this week aren't posted yet. When the office uploads the Word file, they'll show up here automatically.</p>
+        </div>
+      )}
+    </section>
+  </article>
+</Layout>
+
+<script>
+  // Save fill-in answers per page so they survive a refresh.
+  const key = "notes:" + location.pathname;
+  let saved: Record<string, string> = {};
+  try { saved = JSON.parse(localStorage.getItem(key) || "{}"); } catch {}
+  document.querySelectorAll<HTMLInputElement>("input.blank").forEach((el) => {
+    const id = el.dataset.blank!;
+    if (saved[id]) el.value = saved[id];
+    el.addEventListener("input", () => {
+      saved[id] = el.value;
+      try { localStorage.setItem(key, JSON.stringify(saved)); } catch {}
+    });
+  });
+</script>
+
+<style>
+  .msg-head { padding-block: clamp(2rem, 1rem + 4vw, 4rem) 1.5rem; }
+  .msg-head p:first-child { margin-bottom: 0.75rem; font-size: var(--step--1); }
+  .msg-head h1 { font-size: var(--step-4); }
+  .msg-head .lead { margin-top: 0.75rem; }
+  .video { position: relative; aspect-ratio: 16 / 9; background: var(--night); border-radius: var(--radius); overflow: hidden; }
+  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .notes { max-width: 46rem; }
+  .notes-head { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--ink); }
+  .notes-head h2 { font-size: var(--step-2); margin-bottom: 0.4rem; }
+  .notes-head p { margin: 0; }
+  .notes-body :global(p) { font-size: var(--step-1); line-height: 2.1; margin-bottom: 0.9em; }
+  .notes-body :global(em) { color: var(--ink-2); font-size: 0.8em; margin-left: 0.4em; white-space: nowrap; }
+  .notes-body :global(input.blank) {
+    font: inherit; font-weight: 650; color: var(--cobalt);
+    width: min(14ch, 100%); min-height: 2.6rem; padding: 0 0.3rem; margin: 0 0.15rem;
+    border: 0; border-bottom: 2px solid var(--cobalt); border-radius: 0; background: var(--sky-wash);
+    transition: background-color 0.2s var(--ease);
+  }
+  .notes-body :global(input.blank:focus) { outline: none; background: oklch(0.9 0.05 240); }
+  .converted { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+</style>

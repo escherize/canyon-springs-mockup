@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHead from "../components/PageHead.astro";
+import { church } from "../data/site";
+---
+<Layout title="Contact" description="Call, email or visit Canyon Springs Christian Church in Middleton, Idaho.">
+  <PageHead title="Contact us" lead="We'd love to hear from you." />
+  <section class="wrap section-tight split even">
+    <dl class="facts">
+      <div><dt>Call</dt><dd><a href={church.phoneHref}>{church.phone}</a></dd></div>
+      <div><dt>Email</dt><dd><a href={`mailto:${church.email}`}>{church.email}</a></dd></div>
+      <div><dt>Visit</dt><dd>{church.street}<br />{church.city}<br /><a href={church.mapUrl} rel="noopener">Get directions</a></dd></div>
+      <div><dt>Follow</dt><dd><a href={church.facebook} rel="noopener">Facebook</a> · <a href={church.instagram} rel="noopener">Instagram</a> · <a href={church.youtube} rel="noopener">YouTube</a></dd></div>
+    </dl>
+    <iframe class="map" title="Map to Canyon Springs Christian Church" loading="lazy" src="https://maps.google.com/maps?q=1444+Cornell+St+Middleton+ID+83644&z=15&output=embed"></iframe>
+  </section>
+</Layout>
+<style>
+  .map { width: 100%; aspect-ratio: 4 / 3; border: 0; border-radius: var(--radius); background: var(--sky-wash); }
+</style>

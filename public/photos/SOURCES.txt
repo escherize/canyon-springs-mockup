@@ -1,0 +1,16 @@
+wheat-pivot https://upload.wikimedia.org/wikipedia/commons/f/ff/Irrigation_and_Water_%2820260611-NRCS-KLS-0015%29.jpg
+rows-horizon https://upload.wikimedia.org/wikipedia/commons/5/57/NRCS_EQIP-_Irrigation_Pivot_in_Middleton%2C_Idaho_%2820260611-NRCS-KLS-0041%29.jpg
+corn-tractor https://upload.wikimedia.org/wikipedia/commons/a/ae/Farm_Equipment-Machinery-_Old_and_New_%2820260611-NRCS-KLS-0036%29.jpg
+pivot-sky https://upload.wikimedia.org/wikipedia/commons/c/cd/Irrigation_and_Water_%2820260611-NRCS-KLS-0003%29.jpg
+pivot-spray https://upload.wikimedia.org/wikipedia/commons/4/42/Irrigation_and_Water_%2820260611-NRCS-KLS-0012%29.jpg
+pivot-field https://upload.wikimedia.org/wikipedia/commons/8/88/NRCS_EQIP-_Irrigation_Pivot_in_Middleton%2C_Idaho_%2820260611-NRCS-KLS-0001%29.jpg
+tractor-corn https://upload.wikimedia.org/wikipedia/commons/e/ef/Farm_Equipment-Machinery-_Old_and_New_%2820260611-NRCS-KLS-0037%29.jpg
+building https://static.wixstatic.com/media/4f69fe_0774cd41207f4009b522d7118898fc26~mv2.jpg (church's own, from the current site)
+worship https://static.wixstatic.com/media/4f69fe_9bc45e16e6234a179f31dcf43ca4f834~mv2.png (church's own, from the current site)
+lobby https://static.wixstatic.com/media/4f69fe_c272938a55be4f8f8183ab4d5f499f71~mv2.png (church's own, from the current site)
+kids-class https://static.wixstatic.com/media/4f69fe_808f325954f2437a87c48c8b9c796843~mv2.png (church's own, from the current site)
+serve-night https://static.wixstatic.com/media/b96b2b_7b881cf74ed5402eb4fe2691d62ddabb~mv2.png (church's own, from the current site)
+zinnias https://static.wixstatic.com/media/4f69fe_0afe73c1e6cb44bbaed0eb0ecc110651~mv2.webp (church's own, from the current site)
+christmas-play https://static.wixstatic.com/media/4f69fe_bfb0f94cfb884e718df7de6ab96a445f~mv2.jpg (church's own, from the current site)
+garden-volunteers https://static.wixstatic.com/media/4f69fe_0a8e6f84d919405b942c0465417b73dd~mv2.webp (church's own, from the current site)
+mens-breakfast https://static.wixstatic.com/media/4f69fe_fe1aa53e39b1490cad68aeef151f1347~mv2.jpg (church's own, from the current site)

@@ -1,0 +1,23 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHead from "../components/PageHead.astro";
+import { church } from "../data/site";
+---
+<Layout title="Give" description="Give online to Canyon Springs Christian Church through Pushpay.">
+  <PageHead title="Give" lead="Thank you for supporting the work of Canyon Springs.">
+    <div class="btn-row give-row">
+      <a class="btn" href={church.giveUrl} rel="noopener">Give online with Pushpay</a>
+    </div>
+  </PageHead>
+  <section class="wrap section-tight split">
+    <div><h2 class="h-sm">Other ways</h2></div>
+    <dl class="facts">
+      <div><dt>The app</dt><dd>Get the Canyon Springs app: <a href={church.appStore} rel="noopener">App Store</a> · <a href={church.playStore} rel="noopener">Google Play</a></dd></div>
+      <div><dt>Questions</dt><dd>Tana Lyle, bookkeeper: <a href="mailto:Canyonspringsfinance@gmail.com">Canyonspringsfinance@gmail.com</a></dd></div>
+    </dl>
+  </section>
+</Layout>
+<style>
+  .give-row { margin-top: 1.75rem; }
+  .h-sm { font-size: var(--step-2); }
+</style>

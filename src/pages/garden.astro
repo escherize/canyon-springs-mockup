@@ -1,0 +1,51 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHead from "../components/PageHead.astro";
+import events from "../data/events.json";
+const base = import.meta.env.BASE_URL;
+const mine = events.upcoming.filter((e) => e.href === "garden/");
+const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+---
+<Layout title="Garden Outreach" description="Canyon Springs Garden Outreach: gardening, teaching, and sharing the harvest in Middleton.">
+  <PageHead title="Garden Outreach" lead="Growing together to build community through gardening, teaching, and sharing the harvest. We're a 100% volunteer non-profit farm and garden." photo="garden-volunteers.jpg" alt="Garden volunteers, adults and kids, holding fresh produce at the garden." pos="50% 40%" />
+
+  <section class="wrap section split">
+    <div>
+      <h2>What we do</h2>
+    </div>
+    <ul class="dolist">
+      <li><strong>Garden volunteers of all ages</strong> learn, grow, and share the harvest of vegetables, fruit, herbs, and flowers through sustainable growing practices.</li>
+      <li><strong>Junior Master Gardeners</strong> classes for youth, and gardening classes and events for adults and families.</li>
+      <li><strong>Growing and gleaning</strong> food for our local food banks and community in need.</li>
+    </ul>
+  </section>
+
+  <section class="section-tight garden-band">
+    <div class="wrap split">
+      <img src={`${base}photos/zinnias.jpg`} width="720" height="720" alt="A girl in a sun hat standing among bright zinnias in the garden." loading="lazy" />
+      <div class="stack">
+        <h2 class="h-sm">Coming up</h2>
+        <ul class="list">
+          {mine.map((e) => <li><span class="muted small">{fmt(e.date)} · {e.time}</span><strong>{e.title}</strong><span class="muted small">{e.where}</span></li>)}
+        </ul>
+        <dl class="facts">
+          <div><dt>Garden</dt><dd>10568 Highway 44, Middleton, ID 83644</dd></div>
+          <div><dt>Contact</dt><dd>Suzanne Ubry<br /><a href="mailto:canyonspringsgardenoutreach@gmail.com">canyonspringsgardenoutreach@gmail.com</a></dd></div>
+        </dl>
+        <p class="muted small">Volunteer hours change with the season. Email Suzanne for this season's hours.</p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .h-sm { font-size: var(--step-2); }
+  .dolist { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); }
+  .dolist li { padding: 1.1rem 0; border-bottom: 1px solid var(--line); color: var(--ink-2); }
+  .dolist strong { color: var(--ink); font-stretch: 112%; }
+  .garden-band { background: var(--sky-wash); }
+  .garden-band img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius); }
+  .list { list-style: none; padding: 0; margin: 0 0 1.5rem; border-top: 2px solid var(--ink); }
+  .list li { display: grid; gap: 0.15rem; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
+  .list strong { font-stretch: 112%; font-size: var(--step-1); }
+</style>

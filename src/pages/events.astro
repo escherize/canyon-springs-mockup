@@ -1,0 +1,70 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHead from "../components/PageHead.astro";
+import { church, snapshot } from "../data/site";
+import events from "../data/events.json";
+const base = import.meta.env.BASE_URL;
+const byMonth = Object.groupBy(events.upcoming, (e) => new Date(e.date + "T12:00:00").toLocaleDateString("en-US", { month: "long", year: "numeric" }));
+const day = (d: string) => new Date(d + "T12:00:00");
+---
+<Layout title="Events" description="Upcoming events at Canyon Springs Christian Church.">
+  <PageHead title="Events" lead="What's coming up. This list comes straight from the church calendar, so past events drop off on their own." />
+
+  <section class="wrap section-tight split">
+    <div>
+      <h2 class="h-sm">Every week</h2>
+      <ul class="weekly">
+        <li><strong>Sunday worship</strong><span>Sundays, 9:00 & 10:30 AM · kids programs at both</span></li>
+        {events.weekly.map((e) => <li><a href={base + e.href}><strong>{e.title}</strong></a><span>{e.when} · {e.who}</span></li>)}
+      </ul>
+    </div>
+    <div>
+      {Object.entries(byMonth).map(([month, list]) => (
+        <section class="month">
+          <h2 class="h-sm">{month}</h2>
+          <ol class="cal">
+            {list!.map((e) => (
+              <li>
+                <time datetime={e.date} class="cal-date">
+                  <span class="dow">{day(e.date).toLocaleDateString("en-US", { weekday: "short" })}</span>
+                  <span class="dnum">{day(e.date).getDate()}</span>
+                </time>
+                <div>
+                  <a class="cal-title" href={base + e.href}>{e.title}</a>
+                  <p class="muted small">{e.time} · {e.where}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ))}
+      <p><a class="go" href={church.calendarUrl} rel="noopener">Full calendar on Church Center</a></p>
+    </div>
+  </section>
+
+  <aside class="wrap section-tight how">
+    <h2 class="h-sm">How this list stays current</h2>
+    <p class="muted">Staff add events to the Church Center calendar the way they already do. The website reads that calendar and shows only public events, upcoming ones first. {events.hidden} (Snapshot taken {snapshot}.)</p>
+  </aside>
+</Layout>
+
+<style>
+  .h-sm { font-size: var(--step-2); margin-bottom: 1rem; }
+  .weekly { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); }
+  .weekly li { display: grid; gap: 0.15rem; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
+  .weekly a { text-decoration: none; }
+  .weekly a:hover { text-decoration: underline; }
+  .weekly strong { font-stretch: 112%; font-size: var(--step-1); }
+  .weekly span { color: var(--ink-2); font-size: var(--step--1); }
+  .month + .month { margin-top: 2.5rem; }
+  .cal { list-style: none; padding: 0; margin: 0 0 1.5rem; border-top: 2px solid var(--ink); }
+  .cal li { display: grid; grid-template-columns: 4rem 1fr; gap: 1.25rem; align-items: start; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+  .cal-date { display: grid; justify-items: center; background: var(--sky-wash); border-radius: var(--radius); padding: 0.5rem 0; line-height: 1; }
+  .dow { font-size: 0.8rem; font-weight: 650; color: var(--cobalt); text-transform: uppercase; letter-spacing: 0.06em; }
+  .dnum { font-size: var(--step-2); font-weight: 850; font-stretch: 125%; margin-top: 0.2rem; }
+  .cal-title { font-weight: 750; font-stretch: 112%; font-size: var(--step-1); text-decoration: none; line-height: 1.2; }
+  .cal-title:hover { text-decoration: underline; }
+  .cal p { margin: 0.3rem 0 0; }
+  .how { border-top: 1px solid var(--line); }
+  .how p { max-width: 62ch; }
+</style>

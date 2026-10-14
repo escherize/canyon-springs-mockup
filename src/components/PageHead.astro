@@ -1,0 +1,11 @@
+---
+interface Props { title: string; lead?: string; photo?: string; alt?: string; pos?: string }
+const { title, lead, photo, alt = "", pos = "50% 50%" } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<header class="page-head wrap">
+  <h1 class="rise">{title}</h1>
+  {lead && <p class="lead rise" style="--i:1">{lead}</p>}
+  <slot />
+</header>
+{photo && <img class="band-photo" src={`${base}photos/${photo}`} alt={alt} style={`object-position:${pos}`} />}

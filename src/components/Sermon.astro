@@ -1,0 +1,40 @@
+---
+// One sermon: thumbnail, title, and links to the video and the notes page.
+import { getCollection } from "astro:content";
+interface Props { message: { date: string; series: string; title: string; scripture: string; youtubeId: string } }
+const { message: m } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const hasNotes = (await getCollection("notes")).some((n) => n.id.startsWith(m.date));
+const pretty = new Date(m.date + "T12:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+const href = `${base}watch/${m.date}/`;
+---
+<article class="sermon">
+  <a class="thumb" href={href} aria-label={`Watch “${m.title}”`}>
+    <img src={`https://i.ytimg.com/vi/${m.youtubeId}/maxresdefault.jpg`} width="1280" height="720" alt="" loading="lazy" />
+    <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+  </a>
+  <div class="meta">
+    <p class="series muted">{m.series} · {pretty}</p>
+    <h3 class="title"><a href={href}>{m.title}</a></h3>
+    <p class="muted">{m.scripture}</p>
+    <div class="btn-row">
+      <a class="btn" href={href}>Watch</a>
+      {hasNotes && <a class="btn ghost" href={`${href}#notes`}>Fill in the notes</a>}
+    </div>
+  </div>
+</article>
+
+<style>
+  .sermon { display: grid; gap: clamp(1.25rem, 1rem + 2vw, 3rem); grid-template-columns: 1fr; align-items: center; }
+  @media (min-width: 48rem) { .sermon { grid-template-columns: 7fr 5fr; } }
+  .thumb { position: relative; display: block; border-radius: var(--radius); overflow: hidden; background: var(--night); }
+  .thumb img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; transition: transform 0.6s var(--ease), filter 0.6s var(--ease); }
+  .thumb:hover img { transform: scale(1.03); filter: brightness(0.9); }
+  .play { position: absolute; left: 1rem; bottom: 1rem; width: 3.5rem; height: 3.5rem; border-radius: 999px; display: grid; place-items: center; background: var(--cobalt); color: white; transition: background-color 0.2s var(--ease); }
+  .thumb:hover .play { background: var(--cobalt-hover); }
+  .series { font-size: var(--step--1); font-weight: 550; margin-bottom: 0.4rem; }
+  .title { font-size: var(--step-3); margin-bottom: 0.5rem; }
+  .title a { color: var(--ink); text-decoration: none; }
+  .title a:hover { color: var(--cobalt); }
+  .btn-row { margin-top: 1.25rem; }
+</style>

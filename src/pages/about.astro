@@ -1,0 +1,56 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHead from "../components/PageHead.astro";
+import { Content as Beliefs } from "../text/beliefs.md";
+const team = [
+  ["Ben Williams", "Senior Pastor", "Ben@canyonchristian.com"],
+  ["Connor Hill", "Students Minister", "Connor@canyonchristian.com"],
+  ["Jamie Hart", "Children's Ministry Director", "Kids@canyonchristian.com"],
+  ["Steve Alderete", "Worship Minister", "Steve@canyonchristian.com"],
+  ["Tana Lyle", "Bookkeeper", "Canyonspringsfinance@gmail.com"],
+  ["Zach Hart", "Elder", "Zach@canyonchristian.com"],
+  ["Traber Cass", "Elder", "Traber@canyonchristian.com"],
+  ["Jason Hill", "Elder", "Jason@canyonchristian.com"],
+];
+---
+<Layout title="About" description="Love God, love others, serve the world. Meet the team at Canyon Springs and read what we believe.">
+  <PageHead title="Love God. Love others. Serve the world." lead="That's our mission, and our process for making disciples: bringing everyone at Canyon Springs into a lifelong, ever-deepening relationship with Jesus Christ and with the family of God." photo="worship.jpg" alt="A Sunday service seen from the back of the room: people seated, the band and screen up front." pos="50% 55%" />
+
+  <section class="wrap section split">
+    <div><h2>What that means</h2></div>
+    <dl class="facts">
+      <div><dt>Disciple</dt><dd>Someone committed to the lordship of Christ and to His mission, being made to look like Him. <span class="refs">Matthew 4:19</span></dd></div>
+      <div><dt>Love God</dt><dd>An all-consuming, fulfilling relationship with our Creator that radiates from an overwhelming appreciation of His love. <span class="refs">Matthew 22:37–39</span></dd></div>
+      <div><dt>Love others</dt><dd>Valuing, accepting, and engaging others unselfishly, as He did. <span class="refs">John 13:34–35</span></dd></div>
+      <div><dt>Serve the world</dt><dd>Communicating the Gospel of Jesus Christ to others through selfless acts of service. <span class="refs">Matthew 5:16</span></dd></div>
+    </dl>
+  </section>
+
+  <section class="section team-band">
+    <div class="wrap">
+      <h2>Our team</h2>
+      <ul class="team">
+        {team.map(([name, role, email]) => (
+          <li><strong>{name}</strong><span class="muted">{role}</span><a href={`mailto:${email}`}>{email}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="beliefs" class="wrap section split">
+    <div><h2>What we believe</h2></div>
+    <div class="prose beliefs"><Beliefs /></div>
+  </section>
+</Layout>
+
+<style>
+  .refs { display: block; font-size: var(--step--1); color: var(--ink-2); margin-top: 0.25rem; }
+  .team-band { background: var(--sky-wash); }
+  .team-band h2 { margin-bottom: 2rem; }
+  .team { list-style: none; padding: 0; margin: 0; display: grid; gap: 0 2rem; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
+  .team li { display: grid; gap: 0.1rem; padding: 1rem 0; border-top: 2px solid var(--ink); }
+  .team strong { font-size: var(--step-1); font-stretch: 112%; }
+  .team a { font-size: var(--step--1); overflow-wrap: anywhere; min-height: 2.75rem; display: inline-flex; align-items: center; }
+  .beliefs :global(h3) { font-size: var(--step-1); margin-top: 2rem; }
+  .beliefs :global(.refs) { display: block; font-size: var(--step--1); color: var(--ink-2); }
+</style>

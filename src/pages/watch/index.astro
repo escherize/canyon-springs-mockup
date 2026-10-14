@@ -1,0 +1,47 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHead from "../../components/PageHead.astro";
+import Sermon from "../../components/Sermon.astro";
+import { church } from "../../data/site";
+import messages from "../../data/messages.json";
+const base = import.meta.env.BASE_URL;
+const [latest, ...older] = messages;
+const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
+---
+<Layout title="Watch" description="Watch Sunday messages from Canyon Springs, live at 10:30 AM or any time after.">
+  <PageHead title="Watch" lead="Live every Sunday at 10:30 AM. Every message stays up afterward, with notes you can fill in as you listen." />
+
+  <section class="wrap section-tight">
+    <Sermon message={latest} />
+  </section>
+
+  <section class="wrap section">
+    <div class="list-head">
+      <h2>Parables</h2>
+      <p class="muted">The current series, newest first.</p>
+    </div>
+    <ul class="msgs">
+      {older.map((m) => (
+        <li>
+          <a href={`${base}watch/${m.date}/`}>
+            <img src={`https://i.ytimg.com/vi/${m.youtubeId}/hqdefault.jpg`} width="480" height="360" alt="" loading="lazy" />
+            <span class="m-date muted small">{fmt(m.date)} · {m.scripture}</span>
+            <span class="m-title">{m.title}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p><a class="go" href={church.youtube} rel="noopener">Every message on YouTube</a></p>
+  </section>
+</Layout>
+
+<style>
+  .list-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.5rem 2rem; margin-bottom: 1.5rem; }
+  .list-head p { margin: 0; }
+  .msgs { list-style: none; padding: 0; margin: 0 0 1.5rem; display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
+  .msgs a { display: grid; gap: 0.35rem; text-decoration: none; color: var(--ink); }
+  .msgs img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius); margin-bottom: 0.4rem; transition: filter 0.3s var(--ease); }
+  .msgs a:hover img { filter: brightness(0.88); }
+  .m-title { font-weight: 750; font-stretch: 112%; font-size: var(--step-1); line-height: 1.2; }
+  .msgs a:hover .m-title { color: var(--cobalt); text-decoration: underline; }
+</style>
