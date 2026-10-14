@@ -2,7 +2,7 @@
 
 A clickable mockup of a new site for Canyon Springs Christian Church (Middleton, Idaho), made to help the team pick a direction. Not the live site: that's https://www.canyonspringschristian.com/.
 
-Live mockup: https://escherize.github.io/canyon-springs-mockup/
+Live mockup: https://escherize.com/canyon-springs-mockup/
 
 ## What it shows
 
