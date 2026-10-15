@@ -57,7 +57,7 @@ const base = import.meta.env.BASE_URL;
     </ol>
   </section>
 
-  <section class="on-blue section-tight">
+  <section class="on-dark section-tight">
     <div class="wrap closing">
       <h2>Questions before Sunday?</h2>
       <p>Call <a href={church.phoneHref}>{church.phone}</a> or email <a href={`mailto:${church.email}`}>{church.email}</a>.</p>
@@ -71,15 +71,15 @@ const base = import.meta.env.BASE_URL;
   .arrive { margin: 0; }
   .arrive img { border-radius: var(--radius); width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
   .arrive figcaption { margin-top: 0.6rem; }
-  .expect { background: var(--sky-wash); }
+  .expect { background: var(--tan-wash); }
   .expect h2 { margin-bottom: 2rem; }
   .expect-grid { display: grid; gap: 2rem clamp(2rem, 4vw, 4rem); grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
-  .expect h3 { color: var(--cobalt); margin-bottom: 0.6rem; }
+  .expect h3 { color: var(--olive); margin-bottom: 0.6rem; }
   .expect p { color: var(--ink-2); }
   .steps { counter-reset: s; list-style: none; padding: 0; margin: 0; }
   .steps li { counter-increment: s; display: grid; grid-template-columns: 2.75rem 1fr; gap: 0 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
   .steps li:first-child { border-top: 2px solid var(--ink); }
-  .steps li::before { content: counter(s); grid-row: span 2; font-weight: 850; font-stretch: 125%; font-size: var(--step-2); color: var(--cobalt); line-height: 1; }
-  .steps strong { display: block; font-stretch: 112%; }
+  .steps li::before { content: counter(s); grid-row: span 2; font-weight: 850; font-family: var(--display); font-size: var(--step-2); color: var(--olive); line-height: 1; }
+  .steps strong { display: block; }
   .closing h2 { font-size: var(--step-3); margin-bottom: 1rem; }
 </style>

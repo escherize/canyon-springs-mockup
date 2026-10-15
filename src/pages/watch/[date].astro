@@ -67,7 +67,7 @@ const pretty = new Date(m.date + "T12:00:00").toLocaleDateString("en-US", { mont
   .msg-head p:first-child { margin-bottom: 0.75rem; font-size: var(--step--1); }
   .msg-head h1 { font-size: var(--step-4); }
   .msg-head .lead { margin-top: 0.75rem; }
-  .video { position: relative; aspect-ratio: 16 / 9; background: var(--night); border-radius: var(--radius); overflow: hidden; }
+  .video { position: relative; aspect-ratio: 16 / 9; background: var(--charcoal); border-radius: var(--radius); overflow: hidden; }
   .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .notes { max-width: 46rem; }
   .notes-head { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--ink); }
@@ -76,11 +76,11 @@ const pretty = new Date(m.date + "T12:00:00").toLocaleDateString("en-US", { mont
   .notes-body :global(p) { font-size: var(--step-1); line-height: 2.1; margin-bottom: 0.9em; }
   .notes-body :global(em) { color: var(--ink-2); font-size: 0.8em; margin-left: 0.4em; white-space: nowrap; }
   .notes-body :global(input.blank) {
-    font: inherit; font-weight: 650; color: var(--cobalt);
+    font: inherit; font-weight: 650; color: var(--olive);
     width: min(14ch, 100%); min-height: 2.6rem; padding: 0 0.3rem; margin: 0 0.15rem;
-    border: 0; border-bottom: 2px solid var(--cobalt); border-radius: 0; background: var(--sky-wash);
+    border: 0; border-bottom: 2px solid var(--olive); border-radius: 0; background: var(--tan-wash);
     transition: background-color 0.2s var(--ease);
   }
-  .notes-body :global(input.blank:focus) { outline: none; background: oklch(0.9 0.05 240); }
+  .notes-body :global(input.blank:focus) { outline: none; background: var(--tan); }
   .converted { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line); }
 </style>

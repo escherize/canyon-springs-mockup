@@ -27,14 +27,14 @@ const href = `${base}watch/${m.date}/`;
 <style>
   .sermon { display: grid; gap: clamp(1.25rem, 1rem + 2vw, 3rem); grid-template-columns: 1fr; align-items: center; }
   @media (min-width: 48rem) { .sermon { grid-template-columns: 7fr 5fr; } }
-  .thumb { position: relative; display: block; border-radius: var(--radius); overflow: hidden; background: var(--night); }
+  .thumb { position: relative; display: block; border-radius: var(--radius); overflow: hidden; background: var(--charcoal); }
   .thumb img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; transition: transform 0.6s var(--ease), filter 0.6s var(--ease); }
   .thumb:hover img { transform: scale(1.03); filter: brightness(0.9); }
-  .play { position: absolute; left: 1rem; bottom: 1rem; width: 3.5rem; height: 3.5rem; border-radius: 999px; display: grid; place-items: center; background: var(--cobalt); color: white; transition: background-color 0.2s var(--ease); }
-  .thumb:hover .play { background: var(--cobalt-hover); }
+  .play { position: absolute; left: 1rem; bottom: 1rem; width: 3.5rem; height: 3.5rem; border-radius: 999px; display: grid; place-items: center; background: var(--olive); color: white; transition: background-color 0.2s var(--ease); }
+  .thumb:hover .play { background: var(--olive-hover); }
   .series { font-size: var(--step--1); font-weight: 550; margin-bottom: 0.4rem; }
   .title { font-size: var(--step-3); margin-bottom: 0.5rem; }
   .title a { color: var(--ink); text-decoration: none; }
-  .title a:hover { color: var(--cobalt); }
+  .title a:hover { color: var(--olive); }
   .btn-row { margin-top: 1.25rem; }
 </style>

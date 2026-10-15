@@ -10,32 +10,36 @@ const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("en-US",
 ---
 <Layout>
   <section class="hero">
-    <div class="wrap hero-text">
-      <h1>
-        <span class="rise" style="--i:0">A place to belong.</span>
-        <span class="rise sub" style="--i:1">A place to grow. A place to serve.</span>
-      </h1>
-      <p class="lead rise" style="--i:3">A community of Christians in Middleton, Idaho, who gather to encourage one another, grow in our faith, and invite others to know and follow Jesus.</p>
-    </div>
-
     <div class="hero-stage">
       <figure class="hero-photo">
-        <img src={`${base}photos/wheat-pivot-2400.jpg`} srcset={`${base}photos/wheat-pivot-1200.jpg 1200w, ${base}photos/wheat-pivot-2400.jpg 2400w`} sizes="100vw" width="2400" height="1600" alt="Ripe wheat in the foreground, an irrigation pivot watering a green field behind it, under a clear Idaho sky." fetchpriority="high" />
+        <img src={`${base}photos/wheat-pivot-2400.jpg`} srcset={`${base}photos/wheat-pivot-1200.jpg 1200w, ${base}photos/wheat-pivot-2400.jpg 2400w`} sizes="100vw" width="2400" height="1600" alt="Ripe wheat in the foreground, an irrigation pivot watering a green field behind it." fetchpriority="high" />
       </figure>
-      <div class="wrap sunday-wrap">
-        <section class="sunday on-blue rise" style="--i:4" aria-labelledby="sunday-h">
-          <h2 id="sunday-h">This Sunday</h2>
-          <p class="times">
-            {church.services.map((t) => <span>{t}<small>AM</small></span>)}
-          </p>
-          <p class="sunday-detail">Kids (newborn–5th grade) have their own programs at both services.</p>
-          <p class="sunday-detail"><a href={church.mapUrl} rel="noopener">{church.street}, Middleton</a></p>
-          <div class="btn-row">
-            <a class="btn" href={`${base}visit/`}>Plan your visit</a>
-            <a class="btn ghost" href={church.mapUrl} rel="noopener">Directions</a>
-          </div>
-        </section>
+      <div class="wrap hero-text">
+        <h1>
+          <span class="rise" style="--i:0">A Place to <em>Belong</em></span>
+          <span class="rise" style="--i:1">A Place to <em>Grow</em></span>
+          <span class="rise" style="--i:2">A Place to <em>Serve</em></span>
+        </h1>
+        <p class="lead rise" style="--i:3">A community of Christians in Middleton, Idaho, who gather to encourage one another, grow in our faith, and invite others to know and follow Jesus.</p>
+        <div class="btn-row on-dark-btns rise" style="--i:4">
+          <a class="btn" href={`${base}visit/`}>Plan a Visit</a>
+          <a class="btn ghost" href={`${base}watch/`}>Watch a Message</a>
+        </div>
       </div>
+    </div>
+    <div class="wrap sunday-wrap">
+      <section class="sunday on-dark rise" style="--i:5" aria-labelledby="sunday-h">
+        <h2 id="sunday-h">Join Us This Sunday</h2>
+        <p class="times">
+          {church.services.map((t) => <span>{t}<small>AM</small></span>)}
+        </p>
+        <p class="sunday-detail">Kids (newborn–5th grade) have their own programs at both services.</p>
+        <p class="sunday-detail"><a href={church.mapUrl} rel="noopener">{church.street}, Middleton</a></p>
+        <div class="btn-row">
+          <a class="btn" href={`${base}visit/`}>Plan a Visit</a>
+          <a class="btn ghost" href={church.mapUrl} rel="noopener">Get Directions</a>
+        </div>
+      </section>
     </div>
   </section>
 
@@ -129,7 +133,7 @@ const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("en-US",
     </div>
   </section>
 
-  <section class="closer on-blue">
+  <section class="closer on-dark">
     <img class="closer-img" src={`${base}photos/pivot-sky-1200.jpg`} srcset={`${base}photos/pivot-sky-1200.jpg 1200w, ${base}photos/pivot-sky-2400.jpg 2400w`} sizes="(min-width: 56rem) 50vw, 100vw" width="1200" height="800" alt="An irrigation pivot stretching across a green field toward the horizon." loading="lazy" />
     <div class="closer-text">
       <h2>First time? Here's what Sunday looks like.</h2>
@@ -140,47 +144,54 @@ const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("en-US",
 </Layout>
 
 <style>
-  .hero-text { padding-block: clamp(2.5rem, 1rem + 6vw, 6rem) clamp(2rem, 1rem + 3vw, 3.5rem); }
-  .hero h1 { display: grid; gap: 0.3em; font-size: var(--step-4); }
-  .hero h1 .sub { color: var(--cobalt); font-size: 0.5em; line-height: 1.1; letter-spacing: -0.01em; }
-  .hero .lead { margin-top: 1.5rem; }
-
-  .hero-stage { position: relative; }
-  .hero-photo { margin: 0; }
-  .hero-photo img { width: 100%; height: clamp(22rem, 62vh, 44rem); object-fit: cover; object-position: 50% 40%; }
+  .hero-stage { position: relative; display: grid; color: var(--cream); }
+  .hero-photo, .hero-text { grid-area: 1 / 1; }
+  .hero-photo { margin: 0; overflow: hidden; }
+  .hero-photo img { width: 100%; height: 100%; min-height: clamp(30rem, 78vh, 48rem); object-fit: cover; object-position: 50% 60%; filter: sepia(0.15) saturate(0.9); }
+  /* Warm charcoal scrim so cream type reads over the sky. */
+  .hero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, rgb(32 33 30 / 0.85) 0%, rgb(32 33 30 / 0.65) 50%, rgb(32 33 30 / 0.15) 100%); }
+  .hero-text { position: relative; align-self: center; padding-block: clamp(3rem, 2rem + 5vw, 6rem) clamp(5rem, 3rem + 8vw, 11rem); }
+  .hero h1 { display: grid; gap: 0.1em; font-size: var(--step-4); letter-spacing: 0.04em; }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+  .hero .lead { margin-top: 1.5rem; color: var(--cream); max-width: 40ch; }
+  .hero .btn-row { margin-top: 2rem; }
+  .on-dark-btns .btn { background: var(--cream); border-color: var(--cream); color: var(--olive); }
+  .on-dark-btns .btn:hover { background: var(--gold); border-color: var(--gold); color: var(--charcoal); }
+  .on-dark-btns .btn.ghost { background: transparent; color: var(--cream); border-color: rgb(244 239 229 / 0.6); }
+  .on-dark-btns .btn.ghost:hover { border-color: var(--cream); background: rgb(244 239 229 / 0.1); }
   @media (prefers-reduced-motion: no-preference) {
     .hero-photo img { animation: settle 1.6s var(--ease) both; }
-    @keyframes settle { from { transform: scale(1.06); filter: saturate(0.7) brightness(1.08); } }
-    .hero-photo { overflow: hidden; }
+    @keyframes settle { from { transform: scale(1.05); } }
   }
 
-  .sunday-wrap { position: absolute; inset: auto 0 0 0; pointer-events: none; }
-  .sunday { pointer-events: auto; width: min(100%, 32rem); padding: clamp(1.5rem, 1rem + 2vw, 2.25rem); border-radius: var(--radius) var(--radius) 0 0; }
-  .sunday h2 { font-size: var(--step-1); color: var(--wheat); letter-spacing: 0; }
-  .times { display: flex; gap: 1.25rem; margin: 0.6rem 0 0.9rem; font-size: var(--step-3); font-weight: 850; font-stretch: 125%; line-height: 1; letter-spacing: -0.03em; }
-  .times small { font-size: 0.35em; margin-left: 0.2em; letter-spacing: 0; font-weight: 700; }
+  /* Sunday panel overlaps the bottom of the photo on wide screens. */
+  .sunday-wrap { position: relative; margin-top: clamp(-8rem, -6vw, -3rem); display: flex; justify-content: flex-end; }
+  .sunday { width: min(100%, 34rem); padding: clamp(1.5rem, 1rem + 2vw, 2.25rem); border-radius: var(--radius); }
+  .sunday h2 { font-size: var(--step-0); color: var(--gold); letter-spacing: 0.1em; }
+  .times { display: flex; gap: 1.25rem; margin: 0.6rem 0 0.9rem; font-size: var(--step-3); font-weight: 700; font-family: var(--display); line-height: 1; }
+  .times small { font-size: 0.35em; margin-left: 0.2em; font-weight: 600; }
   .sunday-detail { margin-bottom: 0.6rem; }
   .sunday .btn-row { margin-top: 1.25rem; }
 
-  /* Phones: the Sunday panel comes before the photo, so when/where is on the first screen. */
   @media (max-width: 44rem) {
-    .hero-stage { display: flex; flex-direction: column-reverse; }
-    .sunday-wrap { position: static; width: 100%; max-width: none; margin: 0; }
-    .sunday { width: 100%; border-radius: 0; padding: 1.75rem var(--gutter); }
-    .hero-photo img { height: 16rem; }
-    .hero-text { padding-block: 1.75rem 1.5rem; }
-    .hero .lead { margin-top: 1rem; font-size: var(--step-0); }
+    .hero-photo img { min-height: 34rem; object-position: 30% 60%; }
+    .hero h1 { font-size: 1.6rem; letter-spacing: 0.02em; }
+    .hero-photo::after { background: linear-gradient(180deg, rgb(32 33 30 / 0.8) 0%, rgb(32 33 30 / 0.55) 100%); }
+    .hero-text { align-self: start; padding-block: 2.5rem 2rem; }
+    .hero .lead { font-size: var(--step-0); }
+    .sunday-wrap { margin-top: 0; width: 100%; }
+    .sunday { border-radius: 0; padding: 1.75rem var(--gutter); }
   }
 
   .pillars { display: grid; gap: clamp(2rem, 1rem + 3vw, 4rem); grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
-  .pillars h2 { font-size: var(--step-3); color: var(--cobalt); margin-bottom: 0.9rem; }
+  .pillars h2 { font-size: var(--step-3); color: var(--rust); margin-bottom: 0.9rem; }
   .pillars p { color: var(--ink-2); max-width: 32ch; }
 
   .strip { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 4px; }
   .strip img { width: 100%; height: clamp(12rem, 28vw, 24rem); object-fit: cover; }
   @media (max-width: 40rem) { .strip { grid-template-columns: 1fr 1fr; } .strip img:first-child { grid-column: 1 / -1; } .strip img { height: 11rem; } }
 
-  .latest-band { background: var(--sky-wash); }
+  .latest-band { background: var(--tan-wash); }
   .band-h { font-size: var(--step-2); margin-bottom: 1.5rem; }
 
   .week-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 2rem; margin-bottom: 2rem; }
@@ -190,7 +201,7 @@ const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("en-US",
   .timetable { list-style: none; padding: 0; margin: 0 0 1rem; border-top: 2px solid var(--ink); }
   .timetable li { display: grid; gap: 0.15rem 1.5rem; grid-template-columns: 1fr; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
   .tt-when { font-size: var(--step--1); color: var(--ink-2); font-weight: 550; }
-  .tt-what { font-weight: 700; font-size: var(--step-1); font-stretch: 112%; line-height: 1.2; }
+  .tt-what { font-weight: 700; font-size: var(--step-1); line-height: 1.2; }
   a.tt-what { text-decoration: none; }
   a.tt-what:hover { text-decoration: underline; }
 
@@ -198,10 +209,10 @@ const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("en-US",
   .ministries h2 { margin-bottom: 1.5rem; }
   .min-list { display: grid; border-top: 2px solid var(--ink); }
   .min { display: grid; grid-template-columns: 1fr; gap: 0.2rem; align-items: baseline; padding: 1.2rem 0; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--ink); position: relative; }
-  @media (min-width: 48rem) { .min { grid-template-columns: minmax(16rem, 1fr) 1.4fr auto; } .min::after { content: "→"; color: var(--cobalt); font-size: var(--step-1); transition: transform 0.25s var(--ease); } }
-  .min-name { font-size: var(--step-2); font-weight: 800; font-stretch: 125%; letter-spacing: -0.02em; line-height: 1.1; transition: color 0.2s var(--ease); }
+  @media (min-width: 48rem) { .min { grid-template-columns: minmax(16rem, 1fr) 1.4fr auto; } .min::after { content: "→"; color: var(--olive); font-size: var(--step-1); transition: transform 0.25s var(--ease); } }
+  .min-name { font-size: var(--step-2); font-weight: 700; font-family: var(--display); letter-spacing: 0.01em; line-height: 1.1; transition: color 0.2s var(--ease); }
   .min-detail { color: var(--ink-2); }
-  .min:hover .min-name { color: var(--cobalt); }
+  .min:hover .min-name { color: var(--olive); }
   .min:hover::after { transform: translateX(6px); }
 
   .closer { display: grid; grid-template-columns: 1fr; }
