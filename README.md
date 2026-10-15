@@ -7,6 +7,7 @@ Live mockup: https://escherize.com/canyon-springs-mockup/
 ## What it shows
 
 - **Real content.** Copy, staff, beliefs, times and photos come from the current site. Farmland photos are USDA NRCS public-domain shots taken near Middleton (`public/photos/SOURCES.txt`).
+- **Homepage hero.** The headline and visit/watch links sit near the top of the image, just below the header, on desktop and phones.
 - **Sermons from YouTube.** `src/data/messages.json` is a snapshot of the channel feed. The real site would refresh it automatically.
 - **Events from Church Center.** `src/data/events.json` is a snapshot of the public calendar, minus rentals and internal meetings.
 - **Sermon notes from Word files.** Drop `YYYY-MM-DD-name.docx` into `notes-inbox/` and run `npm run notes`. It writes Markdown to `src/content/notes/`, and the sermon page turns the blanks into fill-in fields. The deploy runs it too.
