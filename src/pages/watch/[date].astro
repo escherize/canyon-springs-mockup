@@ -9,6 +9,8 @@ export async function getStaticPaths() {
   return messages.map((m) => ({ params: { date: m.date }, props: { m, note: notes.find((n) => n.id.startsWith(m.date)) } }));
 }
 const { m, note } = Astro.props;
+// ponytail: the mockup only has notes for a couple of Sundays; the empty state links to them.
+const withNotes = (await getCollection("notes")).map((n) => messages.find((x) => n.id.startsWith(x.date))).filter(Boolean);
 const { Content } = note ? await render(note) : { Content: null };
 const base = import.meta.env.BASE_URL;
 const pretty = new Date(m.date + "T12:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
@@ -32,7 +34,7 @@ const pretty = new Date(m.date + "T12:00:00").toLocaleDateString("en-US", { mont
         <div class="notes">
           <div class="notes-head">
             <h2>Sermon notes</h2>
-            <p class="muted small">Fill in the blanks as you listen. Your answers stay on this device.</p>
+            <p class="muted small">Fill in the blanks as you listen. Stuck? Tap <span class="hint-demo" aria-hidden="true">?</span> once for the first letters, twice for the answer. Your answers stay on this device.</p>
           </div>
           <div class="notes-body prose"><Content /></div>
           <p class="small muted converted">This page was made automatically from the Word file the office already writes ({note.data.source}). No retyping.</p>
@@ -40,7 +42,7 @@ const pretty = new Date(m.date + "T12:00:00").toLocaleDateString("en-US", { mont
       ) : (
         <div class="notes empty">
           <h2>Sermon notes</h2>
-          <p class="muted">Notes for this week aren't posted yet. When the office uploads the Word file, they'll show up here automatically.</p>
+          <p class="muted">This mockup only converted notes for {withNotes.map((x, i) => <>{i > 0 && " and "}<a href={`${base}watch/${x.date}/#notes`}>{x.title}</a></>)}. On the real site, every week's notes would show up here as soon as the office uploads the Word file.</p>
         </div>
       )}
     </section>
@@ -58,6 +60,21 @@ const pretty = new Date(m.date + "T12:00:00").toLocaleDateString("en-US", { mont
     el.addEventListener("input", () => {
       saved[id] = el.value;
       try { localStorage.setItem(key, JSON.stringify(saved)); } catch {}
+    });
+    const answer = el.dataset.answer;
+    if (answer) el.style.width = `max(9ch, ${answer.length + 2}ch)`;
+  });
+
+  // Hints: first tap shows first letters ("e_____ i_ t__ w___"), second shows the answer. Shown as placeholder, never typed in.
+  document.querySelectorAll<HTMLButtonElement>("button.hint").forEach((btn) => {
+    const input = document.querySelector<HTMLInputElement>(`input.blank[data-blank="${btn.dataset.for}"]`)!;
+    const answer = input.dataset.answer!;
+    let step = 0;
+    btn.addEventListener("click", () => {
+      step += 1;
+      input.placeholder = step === 1 ? answer.replace(/\B\w/g, "_") : answer;
+      if (step === 2) { btn.disabled = true; btn.setAttribute("aria-label", `Answer shown for blank ${btn.dataset.for}`); }
+      input.focus();
     });
   });
 </script>
@@ -82,5 +99,14 @@ const pretty = new Date(m.date + "T12:00:00").toLocaleDateString("en-US", { mont
     transition: background-color 0.2s var(--ease);
   }
   .notes-body :global(input.blank:focus) { outline: none; background: var(--tan); }
+  .notes-body :global(input.blank::placeholder) { color: var(--ink-2); font-weight: 500; opacity: 1; }
+  .notes-body :global(button.hint), .hint-demo {
+    display: inline-grid; place-items: center; width: 2.25rem; height: 2.25rem; margin: 0 0.35rem 0 0.1rem; vertical-align: middle;
+    font: 700 1rem/1 var(--font); color: var(--olive); background: transparent; border: 1.5px solid var(--olive); border-radius: 999px; cursor: pointer;
+    transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+  }
+  .hint-demo { width: 1.5rem; height: 1.5rem; font-size: 0.8rem; margin: 0 0.1rem; cursor: default; }
+  .notes-body :global(button.hint:hover) { background: var(--olive); color: var(--cream); }
+  .notes-body :global(button.hint:disabled) { opacity: 0.35; cursor: default; background: transparent; color: var(--olive); }
   .converted { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line); }
 </style>

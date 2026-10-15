@@ -151,7 +151,7 @@ const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("en-US",
   /* Warm charcoal scrim so cream type reads over the sky. */
   .hero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, rgb(32 33 30 / 0.85) 0%, rgb(32 33 30 / 0.65) 50%, rgb(32 33 30 / 0.15) 100%); }
   .hero-text { position: relative; align-self: center; padding-block: clamp(3rem, 2rem + 5vw, 6rem) clamp(5rem, 3rem + 8vw, 11rem); }
-  .hero h1 { display: grid; gap: 0.1em; font-size: var(--step-4); letter-spacing: 0.04em; }
+  .hero h1 { display: grid; gap: 0.1em; font-size: var(--step-4); letter-spacing: calc(var(--heading-track) + 0.02em); }
   .hero h1 em { font-style: normal; color: var(--gold); }
   .hero .lead { margin-top: 1.5rem; color: var(--cream); max-width: 40ch; }
   .hero .btn-row { margin-top: 2rem; }
@@ -175,7 +175,7 @@ const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("en-US",
 
   @media (max-width: 44rem) {
     .hero-photo img { min-height: 34rem; object-position: 30% 60%; }
-    .hero h1 { font-size: 1.6rem; letter-spacing: 0.02em; }
+    .hero h1 { font-size: var(--hero-phone, 1.6rem); letter-spacing: var(--heading-track); }
     .hero-photo::after { background: linear-gradient(180deg, rgb(32 33 30 / 0.8) 0%, rgb(32 33 30 / 0.55) 100%); }
     .hero-text { align-self: start; padding-block: 2.5rem 2rem; }
     .hero .lead { font-size: var(--step-0); }
@@ -210,7 +210,7 @@ const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("en-US",
   .min-list { display: grid; border-top: 2px solid var(--ink); }
   .min { display: grid; grid-template-columns: 1fr; gap: 0.2rem; align-items: baseline; padding: 1.2rem 0; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--ink); position: relative; }
   @media (min-width: 48rem) { .min { grid-template-columns: minmax(16rem, 1fr) 1.4fr auto; } .min::after { content: "→"; color: var(--olive); font-size: var(--step-1); transition: transform 0.25s var(--ease); } }
-  .min-name { font-size: var(--step-2); font-weight: 700; font-family: var(--display); letter-spacing: 0.01em; line-height: 1.1; transition: color 0.2s var(--ease); }
+  .min-name { font-size: var(--step-2); font-weight: var(--heading-weight); font-family: var(--display); letter-spacing: var(--heading-track); line-height: 1.1; transition: color 0.2s var(--ease); }
   .min-detail { color: var(--ink-2); }
   .min:hover .min-name { color: var(--olive); }
   .min:hover::after { transform: translateX(6px); }

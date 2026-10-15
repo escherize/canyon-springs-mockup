@@ -12,13 +12,22 @@ const pageTitle = title ? `${title} · ${church.short}` : `${church.name} · Mid
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script is:inline>
+      // Mockup theme: ?theme= wins, then the last pick, then Harvest.
+      (() => {
+        const ok = ["harvest", "sky", "sage"];
+        let t = new URLSearchParams(location.search).get("theme");
+        try { if (!ok.includes(t)) t = localStorage.getItem("theme"); } catch {}
+        if (ok.includes(t)) { document.documentElement.dataset.theme = t; try { localStorage.setItem("theme", t); } catch {} }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Montserrat:wght@600..800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Montserrat:wght@600..800&family=Mona+Sans:wdth,wght@100..125,400..900&family=Fraunces:opsz,wght@9..144,500..700&display=swap" />
     <link rel="icon" href={`${base}logo-mark.png`} type="image/png" />
   </head>
   <body>
@@ -27,7 +36,24 @@ const pageTitle = title ? `${title} · ${church.short}` : `${church.name} · Mid
       <div class="wrap">
         <strong>Design mockup, not the live site.</strong>{" "}
         Sermons and events are a real snapshot of YouTube and Church Center from {snapshot}. The real site would update itself.
+        <label class="theme-pick">Theme
+          <select id="theme">
+            <option value="harvest">Harvest (Zach's brief)</option>
+            <option value="sky">Big Sky</option>
+            <option value="sage">Sage</option>
+          </select>
+        </label>
       </div>
+      <script is:inline>
+        (() => {
+          const sel = document.getElementById("theme");
+          sel.value = document.documentElement.dataset.theme || "harvest";
+          sel.addEventListener("change", () => {
+            document.documentElement.dataset.theme = sel.value;
+            try { localStorage.setItem("theme", sel.value); } catch {}
+          });
+        })();
+      </script>
     </div>
 
     <header class="site-header">
@@ -105,8 +131,10 @@ const pageTitle = title ? `${title} · ${church.short}` : `${church.name} · Mid
   .skip:focus { left: 0.5rem; top: 0.5rem; }
 
   .mockup-note { background: var(--tan-wash); color: var(--ink); font-size: var(--step--1); padding-block: 0.6rem; line-height: 1.45; }
+  .theme-pick { display: inline-flex; align-items: center; gap: 0.5rem; margin-left: 0.75rem; font-weight: 700; white-space: nowrap; }
+  .theme-pick select { font: inherit; font-weight: 500; color: var(--ink); background: var(--bg); border: 1px solid var(--ink-2); border-radius: var(--radius); padding: 0.35rem 0.5rem; min-height: 2.5rem; }
 
-  .site-header { position: sticky; top: 0; z-index: var(--z-sticky); background: oklch(0.955 0.013 85 / 0.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .site-header { position: sticky; top: 0; z-index: var(--z-sticky); background: color-mix(in oklch, var(--bg) 94%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: 4.5rem; }
   .brand { display: block; flex-shrink: 1; min-width: 0; }
   .brand img { height: 3.25rem; width: auto; mix-blend-mode: multiply; }
@@ -141,7 +169,7 @@ const pageTitle = title ? `${title} · ${church.short}` : `${church.name} · Mid
   .menu .menu-btn { display: grid; color: white; }
   .menu .menu-btn:hover { background: oklch(1 0 0 / 0.12); }
   .menu ul { list-style: none; padding: 0; margin: 1.5rem 0; }
-  .menu li a { display: block; padding: 0.55rem 0; font-family: var(--display); font-size: var(--step-2); font-weight: 700; text-transform: uppercase; text-decoration: none; letter-spacing: 0.03em; }
+  .menu li a { display: block; padding: 0.55rem 0; font-family: var(--display); font-size: var(--step-2); font-weight: var(--heading-weight); text-transform: var(--heading-case); text-decoration: none; letter-spacing: var(--heading-track); }
   .menu li a:hover { color: var(--gold); }
   .menu-meta { margin-top: auto; color: var(--tan); }
 

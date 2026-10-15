@@ -1,20 +1,26 @@
 // Sermon notes: notes-inbox/YYYY-MM-DD-name.docx -> src/content/notes/YYYY-MM-DD-name.md
 // Blanks (runs of underscores) become {{blank}}; the notes page turns those into fill-in fields.
+// Underlined words become {{blank:word}}: a blank whose answer powers the hint button.
+// So the office can type the answer and underline it instead of typing ______.
 import { readdir, writeFile, mkdir } from "node:fs/promises";
 import mammoth from "mammoth";
 import TurndownService from "turndown";
 
 const IN = "notes-inbox", OUT = "src/content/notes";
 const td = new TurndownService({ headingStyle: "atx", emDelimiter: "*" });
+td.addRule("answer", { filter: "u", replacement: (text) => (/[^_\\\s]/.test(text) ? `{{blank:${text.trim()}}}` : text) });
 
-export async function convert(path) {
-  const { value: html } = await mammoth.convertToHtml({ path });
-  const md = td.turndown(html.replace(/<img[^>]*>/g, ""))
+export function toMarkdown(html) {
+  return td.turndown(html.replace(/<img[^>]*>/g, ""))
     .replace(/(?:\\?_\s?){4,}/g, "{{blank}}")   // ____ or \_\_\_ (with stray spaces)
-    .replace(/\*\*\s*\{\{blank\}\}\s*\*\*/g, "{{blank}}")
+    .replace(/\*\*\s*(\{\{blank[^}]*\}\})\s*\*\*/g, "$1")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
-  return md;
+}
+
+export async function convert(path) {
+  const { value: html } = await mammoth.convertToHtml({ path }, { styleMap: ["u => u"] });
+  return toMarkdown(html);
 }
 
 // First two non-empty lines of these notes are "Date, Scripture" and "Series N: Title".

@@ -17,6 +17,9 @@
 
   --font: "DM Sans", system-ui, sans-serif;
   --display: "Montserrat", system-ui, sans-serif;
+  --heading-case: uppercase;
+  --heading-weight: 700;
+  --heading-track: 0.02em;
   --step--1: clamp(0.94rem, 0.9rem + 0.1vw, 1rem);
   --step-0: clamp(1.06rem, 1rem + 0.25vw, 1.19rem);
   --step-1: clamp(1.33rem, 1.2rem + 0.5vw, 1.6rem);
@@ -31,6 +34,49 @@
 
   --z-sticky: 10;
   --z-menu: 20;
+}
+
+/* Theme selector (mockup only). Token names come from Harvest; other themes reuse them as roles:
+   --olive = primary, --charcoal = footer, --rust = accent on light, --gold = accent on dark. */
+[data-theme="sky"] {
+  --charcoal: oklch(0.25 0.08 258);
+  --olive: oklch(0.43 0.17 256);
+  --olive-hover: oklch(0.37 0.16 257);
+  --rust: oklch(0.43 0.17 256);
+  --tan: oklch(0.88 0.04 245);
+  --tan-wash: oklch(0.95 0.025 240);
+  --gold: oklch(0.83 0.13 82);
+  --cream: #fff;
+  --ink: oklch(0.21 0.02 256);
+  --ink-2: oklch(0.43 0.025 256);
+  --line: oklch(0.89 0.012 250);
+  --bg: #fff;
+  --font: "Mona Sans", system-ui, sans-serif;
+  --display: "Mona Sans", system-ui, sans-serif;
+  --heading-case: none;
+  --hero-phone: 2.1rem;
+  --heading-weight: 800;
+  --heading-track: -0.01em;
+}
+[data-theme="sage"] {
+  --charcoal: #1F2420;
+  --olive: #3E4A3D;
+  --olive-hover: #52604F;
+  --rust: #A3542F;
+  --tan: #CBD0C0;
+  --tan-wash: #E3E6DA;
+  --gold: #D4B06A;
+  --cream: #F5F3EC;
+  --ink: #1F2420;
+  --ink-2: #51584F;
+  --line: #CBD0C0;
+  --bg: #F5F3EC;
+  --font: "DM Sans", system-ui, sans-serif;
+  --display: "Fraunces", Georgia, serif;
+  --heading-case: none;
+  --hero-phone: 2.1rem;
+  --heading-weight: 600;
+  --heading-track: 0;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -53,13 +99,13 @@ a:hover { color: var(--rust); text-decoration-thickness: 2px; }
 
 h1, h2, h3 {
   font-family: var(--display);
-  font-weight: 700;
+  font-weight: var(--heading-weight);
   line-height: 1.08;
-  letter-spacing: 0.02em;
+  letter-spacing: var(--heading-track);
   text-wrap: balance;
   margin: 0;
 }
-h1, h2 { text-transform: uppercase; }
+h1, h2 { text-transform: var(--heading-case); }
 h1 { font-size: var(--step-4); }
 h2 { font-size: var(--step-3); }
 h3 { font-size: var(--step-1); line-height: 1.2; letter-spacing: 0; }
