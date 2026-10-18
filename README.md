@@ -10,7 +10,7 @@ Live mockup: https://escherize.com/canyon-springs-mockup/
 - **Homepage hero.** The headline and visit/watch links sit near the top of the image, just below the header, on desktop and phones.
 - **Sermons from YouTube.** `src/data/messages.json` is a snapshot of the channel feed. The real site would refresh it automatically.
 - **Events from Church Center.** `src/data/events.json` is a snapshot of the public calendar, minus rentals and internal meetings.
-- **Sermon notes from Word files.** Drop `YYYY-MM-DD-name.docx` into `notes-inbox/` and run `npm run notes`. It writes Markdown to `src/content/notes/`, and the sermon page turns the blanks into fill-in fields. The deploy runs it too.
+- **Sermon notes from Word files.** Drop `YYYY-MM-DD-name.docx` into `notes-inbox/` and run `npm run notes`. It writes Markdown to `src/content/notes/`, and the sermon page turns the blanks into fill-in fields. Underline an answer in Word (instead of typing ______) and that blank gets a hint button. Check: `node scripts/docx2md.check.mjs`. The deploy runs it too.
 - **A change-request form** (`/request/`). It doesn't send anything yet.
 
 ## Run it
@@ -27,4 +27,4 @@ Pushing to `main` deploys to GitHub Pages (`.github/workflows/deploy.yml`).
 
 - Church facts (address, times, links): `src/data/site.ts`
 - Statement of faith: `src/text/beliefs.md`
-- Look and feel: `src/styles/global.css` (Mona Sans; cobalt on white)
+- Look and feel: `src/styles/global.css`. Default theme "Harvest" follows Zach's brief (cream, olive, gold, rust; Montserrat + DM Sans). The banner's theme menu also offers Big Sky and Sage; `?theme=` sets it from a link.
